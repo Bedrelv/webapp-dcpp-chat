@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Авторизация:</title>
+        <link rel="shortcut icon" href="../static/favicon.ico">
+        <script type="text/javascript" src="http://userapi.com/js/api/openapi.js?17"></script>
+        <script type="text/javascript">
+            VK.init({apiId: 2022323});
+        </script>
+    </head>
+    <body>
+        <div id="vk_auth"></div>
+        <script type="text/javascript">
+            VK.Widgets.Auth("vk_auth", {width: "200px", authUrl: '/auth/'});
+        </script>
+    </body>
+</html>

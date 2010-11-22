@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta http-equiv name="Content-Type" value="text/html; charset=utf-8">
+<title>Websockets Chat Demo</title>
+<link rel="shortcut icon" href="/static/favicon.ico">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>WebSocket:</h2>
+    <div style="position:fixed; right: 10px; top: 55px;">
+        <h4>You uid: {{ uid }} <img src="{{ avatar_mini }}"></h4>
+    </div>
+<div id="chat">
+	<div id="status" style="position:fixed; right: 10px;"></div>
+	<h2>Chat log</h2>
+	<ul id="log"></ul>
+	<form id="form">
+	<input type="text" id="data">
+	<input type="submit" value="say">
+        <button onClick="connect()" id="btn_connect">connect</button>
+        <button onClick="disconnect()" id="btn_disconnect" disabled>disconnect</button>
+	</form>
+</div>
+<div id="nows">
+    Ваш браузер не поддерживает WebSockets :'(
+</div>
+</body>
+<script>
+    var ws = null;
+    function connect(){
+        if (window.WebSocket){
+            ws = new WebSocket("ws://yurtaev.homeip.net:8888/websocket");
+            ws.onopen = function() {
+                console.info("Connection open...");
+                ws.send("«Connect»");
+                $('#status').removeClass('disconnected').addClass('connected').text('WebSocket is connected :)');
+            };
+            ws.onmessage = function (evt) {
+                console.info(evt.data);
+                $('<li/>').text(evt.data).appendTo('#log');
+                $("body").stop(true, false).animate({ scrollTop: $(document).height() }, "slow");
+            };
+            ws.onclose = function() {
+                console.info("Connection closed...");
+                disconnect()
+            };
+            document.getElementById("btn_connect").disabled = true;
+            document.getElementById("btn_disconnect").disabled = false;
+        } else {
+            $('#chat').show();
+        }
+    }
+    function disconnect(){
+        ws.send("«Disconnect»");
+        ws.close();
+        document.getElementById("btn_connect").disabled = false;
+        document.getElementById("btn_disconnect").disabled = true;
+        $('#status').removeClass('connected').addClass('disconnected').text('WebSocket is disconnected :(');
+    }
+    $('#form').submit(function(evt) {
+        evt.preventDefault();
+        ws.send($('#data').val());
+        $('#data').val('');
+    });
+    $('#nows').hide();
+</script>
+</html>
