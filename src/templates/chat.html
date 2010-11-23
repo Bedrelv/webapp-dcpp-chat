@@ -4,6 +4,7 @@
         <title>Websockets Chat Demo</title>
         <link rel="shortcut icon" href="/static/favicon.ico">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/js/main.js"></script>
     </head>
     <body>
         <h2>WebSocket:</h2>
@@ -14,25 +15,16 @@
             <div id="status" style="position:fixed; right: 10px;"></div>
             <h2>Chat log</h2>
             <ul id="log"></ul>
-            <form id="form">
                 <input type="text" id="data">
-                //<input type="submit" value="say">
                 <button onClick="send()" id="btn_send">send</button>
                 <button onClick="connect()" id="btn_connect">connect</button>
                 <button onClick="disconnect()" id="btn_disconnect" disabled>disconnect</button>
-            </form>
         </div>
         <div id="nows">
             Ваш браузер не поддерживает WebSockets :'(
         </div>
     </body>
     <script>
-//        $('#form').submit(function(evt) {
-//            evt.preventDefault();
-//            ws.send($('#data').val());
-//            $('#data').val('');
-//        });
         $('#nows').hide();
     </script>
-    <script type="text/javascript" src="/static/js/main.js"></script>
 </html>
