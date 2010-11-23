@@ -5,6 +5,8 @@
 """
 
 import os
+import json
+import time
 
 import tornado.httpserver
 import tornado.ioloop
@@ -17,8 +19,11 @@ LISTENERS = []
 
 class EventsDC(BotLogDC.EventsDC):
     def MsgGlobal(self, nick, message):
+        dic = {"atr":"MsgGlobal", "msg":{"nick": nick, "text":message, "time":time.strftime("%H:%M:%S"), "data":time.strftime("%Y-%m-%d")}}
+        data = json.dumps(dic)
         for element in LISTENERS:
-            element.write_message(nick + " => " + message)
+            #element.write_message(nick + " => " + message)
+            element.write_message(data)
         pass
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -58,8 +63,6 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler):
         bots.create_user(self.get_secure_cookie("uid"))
 
     def on_message(self, message):
-#        for element in LISTENERS:
-#            element.write_message(self.request.remote_ip + " => " + message)
         bots.send(self.get_secure_cookie("uid"), message)
 
     def on_close(self):

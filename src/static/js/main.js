@@ -14,7 +14,9 @@ function connect(){
         };
         ws.onmessage = function (evt) {
             console.info(evt.data);
-            $('<li/>').text(evt.data).appendTo('#log');
+            var json = jQuery.parseJSON(evt.data);
+            console.info(json.msg.text);
+            $('<li/>').text("[" + json.msg.time + "]<"+json.msg.nick + ">: " + json.msg.text).appendTo('#log');
             $("body").stop(true, false).animate({
                 scrollTop: $(document).height()
             }, "slow");
