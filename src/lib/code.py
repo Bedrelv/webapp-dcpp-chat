@@ -14,6 +14,9 @@ config = {
 }
 
 class BotThread:
+    """
+        класс для работы с ботами DC
+    """
     def __init__(self, eventsdc):
         self.eventsdc = eventsdc
         pass

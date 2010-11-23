@@ -1,4 +1,9 @@
 # -*- coding:utf8 -*-
+
+"""
+    комментарий
+"""
+
 import os
 
 import tornado.httpserver
