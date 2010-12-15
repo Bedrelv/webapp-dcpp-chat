@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <!-- Libs -->
+    <script type="text/javascript" src="static/lib/ext/adapter/yui/yui-utilities.js"></script>
+    <script type="text/javascript" src="static/lib/ext/adapter/yui/ext-yui-adapter.js"></script>
+    <script type="text/javascript" src="static/lib/ext/ext-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/lib/ext/resources/css/ext-all.css"/>
+    <script type="text/javascript" src="http://yandex.st/jquery/1.4.4/jquery.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.jgrow.css" type="text/css"/>
+    <script type="text/javascript" src="http://stanlemon.net/javascript/jquery.jgrowl.js"></script>
+    <!-- ENDLIBS -->
+    <script type="text/javascript" src="static/js/UI.js"></script>
+    <script type="text/javascript" src="static/js/main-extjs.js"></script>
+    <title>New Web Project</title>
+    <style type="text/css">
+
+        body {
+
+            font-family: arial;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        div {
+            display: block;
+        }
+
+        .main_log {
+            background-color: #F8F7F8;
+            margin-top: 0px;
+            overflow: auto;
+        }
+
+        .msg {
+            font-size: 14px;
+            line-height: 23px;
+            clear: both;
+            display: inline;
+        }
+
+        .msg_text:hover {
+            background-color: #FFDAB9;
+        }
+
+        .msg_time {
+            color: gray;
+            float: left;
+        }
+
+        .msg_nick {
+            color: #B03060;
+            float: left;
+            padding-right: 5px;
+            padding-left: 5px;
+        }
+
+        .msg_text {
+            float: none;
+        }
+    </style>
+</head>
+<body>
+</body>
+<script>
+    $.jGrowl('Hello!!!', { life: 3000, header: 'System message:' });
+</script>
+</html>
