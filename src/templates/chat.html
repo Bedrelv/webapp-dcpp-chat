@@ -5,6 +5,8 @@
         <link rel="shortcut icon" href="/static/favicon.ico">
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
         <script type="text/javascript" src="/static/js/main.js"></script>
+        <link rel="stylesheet" href="/static/css/jquery.jgrow.css" type="text/css" />
+        <script type="text/javascript" src="http://stanlemon.net/javascript/jquery.jgrowl.js"></script>
     </head>
     <body>
         <h2>WebSocket:</h2>
@@ -26,5 +28,6 @@
     </body>
     <script>
         $('#nows').hide();
+        $.jGrowl('Hello!!!', { life: 3000, header: 'System message:' });
     </script>
 </html>

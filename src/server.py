@@ -4,27 +4,13 @@
     комментарий
 """
 
-import os
-import json
-import time
+import os, json
 
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-from lib import BotLogDC
 from lib import code
-
-LISTENERS = []
-
-class EventsDC(BotLogDC.EventsDC):
-    def MsgGlobal(self, nick, message):
-        dic = {"atr":"MsgGlobal", "msg":{"nick": nick, "text":message, "time":time.strftime("%H:%M:%S"), "data":time.strftime("%Y-%m-%d")}}
-        data = json.dumps(dic)
-        for element in LISTENERS:
-            #element.write_message(nick + " => " + message)
-            element.write_message(data)
-        pass
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -41,6 +27,13 @@ class ChatMsgHandler(BaseHandler):
         avatar_mini = self.get_secure_cookie("photo_rec")
         self.render("chat.html", uid=uid, avatar_mini=avatar_mini)
 
+class ExtjsHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        uid = self.get_secure_cookie("uid")
+        avatar_mini = self.get_secure_cookie("photo_rec")
+        self.render("chat-extjs.html", uid=uid, avatar_mini=avatar_mini)
+
 class LoginMsgHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("login.html")
@@ -53,22 +46,46 @@ class AuthMsgHandler(tornado.web.RequestHandler):
         self.set_secure_cookie("photo", self.get_argument("photo"))
         self.set_secure_cookie("photo_rec", self.get_argument("photo_rec"))
         self.set_secure_cookie("hash", self.get_argument("hash"))
-        self.redirect("/")
+        self.redirect("/extjs")
         pass
 
 class WebsocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print "Connect " + self.request.remote_ip + " uid: " + self.get_secure_cookie("uid")
-        LISTENERS.append(self)
-        bots.create_user(self.get_secure_cookie("uid"))
+        #print "Connect " + self.request.remote_ip + " last_name: " + self.get_secure_cookie("last_name")
+        #        LISTENERS.append(self)
+        bots.create_user(self.get_secure_cookie("uid"), self)
+
+    #bots.create_user(self.get_secure_cookie("last_name"), self)
 
     def on_message(self, message):
-        bots.send(self.get_secure_cookie("uid"), message)
+        #bots.send(self.get_secure_cookie("uid"), message)
+
+        try:
+            data = json.loads(message)
+            if data['cmd']=='MsgGlobal':
+                bots.send(self.get_secure_cookie("uid"), data['data']['text'])
+            if data['cmd'] == 'GetNickList':
+                bots.GetNickList(self.get_secure_cookie("uid"))
+        except:
+            print "Error: on_message"
+
+
+        try:
+            print "_______"
+            print json.loads(message)
+            print "_______"
+        except:
+            print "Error: type print"
+
+    #bots.send(self.get_secure_cookie("last_name"), message)
 
     def on_close(self):
         print "Disconnect " + self.request.remote_ip
-        bots.close(self.get_secure_cookie("uid"))
-        LISTENERS.remove(self)
+        bots.close(self.get_secure_cookie("uid"), self)
+
+    #bots.close(self.get_secure_cookie("last_name"), self)
+    #        LISTENERS.remove(self)
 
 
 settings = {
@@ -79,17 +96,17 @@ settings = {
 }
 
 application = tornado.web.Application([
-                                      (r'/', IndexMsgHandler),
-                                      (r'/chat', ChatMsgHandler),
-                                      (r'/login', LoginMsgHandler),
-                                      (r'/auth/', AuthMsgHandler),
-                                      (r'/websocket', WebsocketHandler),
-                                      ], **settings)
+                                              (r'/', IndexMsgHandler),
+                                              (r'/extjs', ExtjsHandler),
+                                              (r'/chat', ChatMsgHandler),
+                                              (r'/login', LoginMsgHandler),
+                                              (r'/auth/', AuthMsgHandler),
+                                              (r'/websocket', WebsocketHandler),
+                                              ], **settings)
 
-bots = code.BotThread(EventsDC())
-
+bots = code.BotThread()
 
 if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(8888, address = "yurtaev.homeip.net")
+    http_server.listen(8888, address="yurtaev.homeip.net")
     tornado.ioloop.IOLoop.instance().start()

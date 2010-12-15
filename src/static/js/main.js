@@ -9,20 +9,22 @@ function connect(){
         ws = new WebSocket("ws://yurtaev.homeip.net:8888/websocket");
         ws.onopen = function() {
             console.info("Connection open...");
+            $.jGrowl('Connection open...', { life: 3000, header: 'System message:' });
             ws.send("«Connect»");
             $('#status').removeClass('disconnected').addClass('connected').text('WebSocket is connected :)');
         };
         ws.onmessage = function (evt) {
             console.info(evt.data);
             var json = jQuery.parseJSON(evt.data);
-            console.info(json.msg.text);
-            $('<li/>').text("[" + json.msg.time + "]<"+json.msg.nick + ">: " + json.msg.text).appendTo('#log');
+            cmd(json);
+            /*$('<li/>').text("[" + json.data.time + "]<"+json.data.nick + ">: " + json.data.text).appendTo('#log');
             $("body").stop(true, false).animate({
                 scrollTop: $(document).height()
-            }, "slow");
+            }, "slow");*/
         };
         ws.onclose = function() {
             console.info("Connection closed...");
+            $.jGrowl('Connection closed...', { life: 3000, header: 'System message:' });
             disconnect()
         };
         document.getElementById("btn_connect").disabled = true;
@@ -42,4 +44,17 @@ function disconnect(){
 function send(){
     ws.send($('#data').val());
     $('#data').val('');
+}
+
+function cmd(json){
+    if (json.cmd == "MsgGlobal") { addMsg(json); }
+    if (json.cmd == "close") { $.jGrowl('Server disconnect', { life: 3000, header: 'System message:' }); }
+}
+
+function addMsg(json) {
+    $('<li/>').text("[" + json.data.time + "]<"+json.data.nick + ">: " + json.data.text).appendTo('#log');
+    $("body").stop(true, false).animate({
+        scrollTop: $(document).height()
+    }, "slow");
+    $.jGrowl(json.data.text, { life: 3000, header: json.data.nick + ':' });
 }

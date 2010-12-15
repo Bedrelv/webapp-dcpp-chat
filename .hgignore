@@ -3,6 +3,8 @@ syntax: glob
 *.tmp
 *.pyc
 nbproject\
+src\.idea
+src\static\lib\
 syntax: regexp
 \.bak$
 \.tmp$
