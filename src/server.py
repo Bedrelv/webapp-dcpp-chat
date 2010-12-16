@@ -52,15 +52,9 @@ class AuthMsgHandler(tornado.web.RequestHandler):
 class WebsocketHandler(tornado.websocket.WebSocketHandler):
     def open(self):
         print "Connect " + self.request.remote_ip + " uid: " + self.get_secure_cookie("uid")
-        #print "Connect " + self.request.remote_ip + " last_name: " + self.get_secure_cookie("last_name")
-        #        LISTENERS.append(self)
         bots.create_user(self.get_secure_cookie("uid"), self)
 
-    #bots.create_user(self.get_secure_cookie("last_name"), self)
-
     def on_message(self, message):
-        #bots.send(self.get_secure_cookie("uid"), message)
-
         try:
             data = json.loads(message)
             if data['cmd']=='MsgGlobal':
@@ -70,22 +64,9 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler):
         except:
             print "Error: on_message"
 
-
-        try:
-            print "_______"
-            print json.loads(message)
-            print "_______"
-        except:
-            print "Error: type print"
-
-    #bots.send(self.get_secure_cookie("last_name"), message)
-
     def on_close(self):
         print "Disconnect " + self.request.remote_ip
         bots.close(self.get_secure_cookie("uid"), self)
-
-    #bots.close(self.get_secure_cookie("last_name"), self)
-    #        LISTENERS.remove(self)
 
 
 settings = {

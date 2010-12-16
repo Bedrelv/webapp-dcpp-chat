@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-import json, time, urllib
+import json, time
 import BotDC
 
 global thread_dic
@@ -19,32 +19,21 @@ class EventsDC(BotDC.EventsDC):
         self.name = name
         
     def MsgGlobal(self, nick, message):
-        # экранирование
-        #message = unicode(urllib.quote(str(message)), "utf8")
-        #message = urllib.quote(str(message))
-        # /экранирование
         dic = {"cmd":"MsgGlobal", "data":{"nick": nick, "text":message, "time":time.strftime("%H:%M:%S"), "data":time.strftime("%Y-%m-%d")}}
         data = json.dumps(dic)
         
         for user in thread_dic[str(self.name)][1]:
             user.write_message(data)
-        pass
     
     def close(self):
         data = json.dumps({"cmd":"close"})
-        """for user in thread_dic[str(self.name)][1]:
-            user.write_message(data)
-#            user.on_close()
-            user.close()"""
         try:
             for user in thread_dic[str(self.name)][1]:
                 user.write_message(data)
                 user.close()
         except:
             pass
-            #thread_dic[str(self.name)][1].remove(user)
-        #bots.close(self.get_secure_cookie("uid"), self)
-        #del thread_dic[str(self.name)]
+
     def NickList(self, data):
         try:
             temp = []
@@ -73,13 +62,7 @@ class BotThread:
             thread_dic[str(name)][1].append(wsuser)
     
     def send(self, name, text):
-        # экранирование
-        #text = unicode(urllib.unquote(str(text)), "utf-8")
-        #text = urllib.unquote_plus(text)
-        # /экранирование
         thread_dic[str(name)][0].sendmessage(text)
-        #print len(thread_dic[str(name)][1])
-        #print type(thread_dic[str(name)][1])
     
     def close(self, name, wsuser):
         if len(thread_dic[str(name)][1]) == 1:

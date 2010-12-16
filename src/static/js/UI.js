@@ -12,29 +12,28 @@ var store = new Ext.data.Store({
 });
 
 var grid = new Ext.grid.GridPanel({
-    anchor: '100% 100%',
+    anchor: '100% 100%', 
     store: store,
     stripeRows: true,
     split: true,
-    bbar: [{
-        xtype: 'tbbutton',
-        text: 'Обновить',
-		disabled:'true',
-        id: "btn_update",
-        handler: function(){
-            GetNickList();
+    bbar: [
+        {
+            xtype: 'tbbutton',
+            text: 'Обновить',
+            disabled:'true',
+            id: "btn_update",
+            handler: function() {
+                GetNickList();
+            }
         }
-    }],
+    ],
     columns:[
-        {header:'Ник', dataIndex: 'name', sortable: true, width: 170}
+        {header:'Ник', dataIndex: 'name', sortable: true, width: 160}
     ]
 });
 
 var tabPanel = new Ext.TabPanel({
     activeTab: 0,
-    //resizeTabs: true,
-    //minTabWidth: 115,
-    //tabWidth: 135,
     enableTabScroll: true,
     region: 'center',
     items: [{
@@ -163,61 +162,7 @@ centerPanel = {
 
 northPanel = {
 	region:'north',
-	//frame:'true',
 	margins: '5 0 5 0',
-    //cmargins: '10 10 10 10',
 	height: 25,
 	items:[topPanel]
-}
-
-
-
-
-
-
-
-function _addMsg(){
-	json = {
-		"cmd":"MsgGlobal",
-		"data": {
-			"nick":"yurtaev",
-			"time":"16:05:17",
-			"date":"08.12.2010",
-			"text":"bla bla bla"
-		}
-	}
-	$("#main_log").append('\
-          <div class="msg">\
-            <div class="msg_time">[23:11:45]</div>\
-            <div class="msg_nick">&lt;yurtaev&gt;</div>\
-            <div class="msg_text">test messages</div>\
-          </div>\
-          <div class="msg">\
-            <div class="msg_time">[23:12:15]</div>\
-            <div class="msg_nick">&lt;Хранитель&gt;</div>\
-            <div class="msg_text">Поприветствуем нового зарегистрировавшегося пользователя ТеМнЫй_DеМоН_55_Regions!</div>\
-          </div>\
-          <div class="msg">\
-            <div class="msg_time">[23:12:15]</div>\
-            <div class="msg_nick">&lt;Хранительдлинный&gt;</div>\
-            <div class="msg_text">Поприветствуем нового зарегистрировавшегося пользователя ТеМнЫй_DеМоН_55_Regions!</div>\
-          </div>\
-          <div class="msg">\
-            <div class="msg_time">[23:11:45]</div>\
-            <div class="msg_nick">&lt;yurtaev&gt;</div>\
-            <div class="msg_text">test messages</div>\
-          </div>\
-          <div class="msg">\
-            <div class="msg_time">[23:12:15]</div>\
-            <div class="msg_nick">&lt;Хранитель&gt;</div>\
-            <div class="msg_text">Поприветствуем нового зарегистрировавшегося пользователя ТеМнЫй_DеМоН_55_Regions!</div>\
-          </div>\
-          <div class="msg">\
-            <div class="msg_time">['+json.data.time+']</div>\
-            <div class="msg_nick">&lt;'+json.data.nick+'&gt;</div>\
-            <div class="msg_text">'+json.data.text+'</div>\
-          </div>');
-		  //$("#main_log").stop(true, false).animate({ scrollTop: $("#main_log").scrollTop() }, "slow");
-			var temp = document.getElementById('main_log').scrollHeight;
-			$("#main_log").stop(true, false).animate({ scrollTop: temp }, "slow");
 }

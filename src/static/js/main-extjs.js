@@ -1,6 +1,5 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Yurtaev
  */
 
 var ws = null;
@@ -14,13 +13,8 @@ function connect() {
             $('#status').removeClass('disconnected').addClass('connected').text('WebSocket is connected :)');
         };
         ws.onmessage = function (evt) {
-            //console.info(evt.data);
             var json = jQuery.parseJSON(evt.data);
             cmd(json);
-            /*$('<li/>').text("[" + json.data.time + "]<"+json.data.nick + ">: " + json.data.text).appendTo('#log');
-             $("body").stop(true, false).animate({
-             scrollTop: $(document).height()
-             }, "slow");*/
         };
         ws.onclose = function() {
             console.info("Connection closed...");
@@ -50,20 +44,8 @@ function send() {
         Ext.Msg.alert('Messages', 'Сообщение не может быть пустым...');
     }
     else {
-        //ws.send(ecsape($('#formSend_textfield').val()));
-
-        //ws.send($('#formSend_textfield').val());
-
-        //var temp = jQuery.parseJSON('{"cmd": "msgGlobal", "data": {"text": $('#formSend_textfield').val()} }');
-        //var temp = jQuery.parseJSON('{"cmd": "msgGlobal", "data": {"text": "123123123"} }');
-        //console.log("############: " + temp.data);
         data = ('{"cmd": "MsgGlobal", "data": {"text": "' + $("#formSend_textfield").val() + '"}}')
         ws.send(data);
-        //console.log('{"cmd": "msgGlobal", "data": {"text": "' + $("#formSend_textfield").val() +'"}}');
-
-        //ws.send($('#formSend_textfield').val());
-        //console.log(escape($('#formSend_textfield').val()));
-        //ws.send(escape($('#formSend_textfield').val()));
         $('#formSend_textfield').val('');
     }
 
@@ -94,22 +76,17 @@ function GetNickList(){
 
 function addMsg(json) {
     $.jGrowl(json.data.text, { life: 3000, header: json.data.nick + ':' });
-    /*
-     $("#main_log").append('\
-     <div class="msg">\
-     <div class="msg_time">['+json.data.time+']</div>\
-     <div class="msg_nick">&lt;'+json.data.nick+'&gt;</div>\
-     <div class="msg_text">'+json.data.text+'</div>\
-     </div>');
-     */
     $("#main_log")
             .append($('<div/>', { class: 'msg'})
             .append($('<div/>', { class: 'msg_time', text: '[' + json.data.time + ']'}))
-            .append($('<div/>', { class: 'msg_nick', text: '<' + json.data.nick + '>'}))
+            .append($('<div/>', { class: 'msg_nick', text: '<' + json.data.nick + '>', dblclick: function(){addNick($(this).text().slice(1,-1))}}))
             .append($('<div/>', { class: 'msg_text', text: json.data.text}))
             );
     var temp = document.getElementById('main_log').scrollHeight;
     $("#main_log").stop(true, false).animate({ scrollTop: temp }, "slow");
 }
 
-//Ext.getCmp('btn_disconnect').on('click', function() {alert('You clicked me');});
+function addNick(nick){
+    $("#formSend_textfield").val(($("#formSend_textfield").val() + " " + nick + ": "));
+    $("#formSend_textfield").focus();
+}
