@@ -6,7 +6,30 @@
  */
 
 var chat = {
+
     'ws': null,
+
+    /* json object to string */
+    'stringify': function(obj) {
+        var t = typeof (obj);
+        if (t != "object" || obj === null) {
+            // simple data type
+            if (t == "string") obj = '"' + obj + '"';
+            return String(obj);
+        }
+        else {
+            // recurse array or object
+            var n, v, json = [], arr = (obj && obj.constructor == Array);
+            for (n in obj) {
+                v = obj[n];
+                t = typeof(v);
+                if (t == "string") v = '"' + v + '"';
+                else if (t == "object" && v !== null) v = JSON.stringify(v);
+                json.push((arr ? "" : '"' + n + '":') + String(v));
+            }
+            return (arr ? "[" : "{") + String(json) + (arr ? "]" : "}");
+        }
+    },
 
     'connect': function() {
 
@@ -28,7 +51,7 @@ var chat = {
 
         } else {
             chat.events.on_system_message('Ваш браузер не поддерживается');
-        };
+        }
 
     },
 
@@ -36,14 +59,20 @@ var chat = {
         chat.ws.close();
     },
 
-    'cmd': function(json){
+    'cmd': function(json) {
         console.log(json)
+    },
+
+    'send': function(json) {
+        data = chat.stringify(json);
+        chat.ws.send(data);
     }
+    
 };
 
 chat.option = {
     'url': 'ws://yurtaev.homeip.net:8888/websocket'
-}
+};
 
 chat.events = {
 
@@ -56,7 +85,7 @@ chat.events = {
     },
 
     'on_userslist': function(json) {
-        
+
     },
 
     'on_system_message': function(msg) {
