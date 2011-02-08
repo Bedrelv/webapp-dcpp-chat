@@ -145,5 +145,33 @@ chat.ui = {
         Ext.getCmp('formSend').disable();
         Ext.getCmp('btn_connect').enable();
         Ext.getCmp('btn_update').disable();
+    },
+
+    'send': function() {
+        active_tab = tabPanel.getActiveTab().id;
+        if ($('#formSend_textfield').val() == '') {
+            chat.events.on_system_message('Сообщение не может быть пустым');
+        }
+        else {
+            if (active_tab == 'main_log'){
+                json = {
+                    'cmd': 'MsgGlobal',
+                    'data': {
+                        'text': $("#formSend_textfield").val()
+                    }
+                };
+                chat.send(json);
+            } else {
+                json = {
+                    'cmd': 'MsgPrivat',
+                    'data': {
+                        'to': active_tab,
+                        'text': $("#formSend_textfield").val()
+                    }
+                };
+                chat.send(json);
+            }
+            $('#formSend_textfield').val('');
+        }
     }
 };

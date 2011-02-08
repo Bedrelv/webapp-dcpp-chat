@@ -63,6 +63,9 @@ class BotThread:
     
     def send(self, name, text):
         thread_dic[str(name)][0].sendmessage(text)
+
+    def send_privat(self, name, nick, text):
+        thread_dic[str(name)][0].send_privat_message(nick, text)
     
     def close(self, name, wsuser):
         if len(thread_dic[str(name)][1]) == 1:

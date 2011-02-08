@@ -116,7 +116,7 @@ class pydcbot(threading.Thread):
         if not message:
             print "Error: not message"
             self.close()
-        datalist = message.split();
+        datalist = message.split()
         
         if self.debugflag == 1:
             print "DEBUG:" + message
@@ -183,6 +183,14 @@ class pydcbot(threading.Thread):
             self.s.send('<' + self.config['nick'] + '> ' + text.encode(self.config['coding_hub']) + '|')
         except:
             print "Error: sendmessage"
+
+    def send_privat_message(self, nick, text):
+        if self.debugflag == 1:
+            print time.strftime("%Y-%m-%d %H:%M:%S") + ' -> message privat say: ' + text.encode("cp1251")
+        try:
+            self.s.send('$To: '+nick.encode(self.config['coding_hub'])+' From: '+self.config['nick']+' $<' + self.config['nick'] + '> ' + text.encode(self.config['coding_hub']) + '|')
+        except:
+            print "Error: send_privat_message"
 
     def GetNickList(self):
         try:

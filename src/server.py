@@ -52,6 +52,8 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler):
             data = json.loads(message)
             if data['cmd']=='MsgGlobal':
                 bots.send(self.get_secure_cookie("uid"), data['data']['text'])
+            if data['cmd']=='MsgPrivat':
+                bots.send_privat(self.get_secure_cookie("uid"), data['data']['to'], data['data']['text'])
             if data['cmd'] == 'GetNickList':
                 bots.GetNickList(self.get_secure_cookie("uid"))
         except:

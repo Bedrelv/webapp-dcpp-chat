@@ -23,7 +23,7 @@ var grid = new Ext.grid.GridPanel({
             disabled:'true',
             id: "btn_update",
             handler: function() {
-                GetNickList();
+                chat.get_userslist();
             }
         }
     ],
@@ -69,7 +69,7 @@ formSend = {
         listeners: {
 			specialkey: function(f, e){
 				if (e.getKey() == e.ENTER) {
-					send();
+					chat.ui.send();
 				}
 			}
 		},
@@ -81,7 +81,7 @@ formSend = {
         xtype: 'tbsplit',
         id: 'sendForm_btn_send',
         handler: function(){
-            send();
+            chat.ui.send();
         },
         menu: [{
             handler: function(){
@@ -110,7 +110,7 @@ var topPanel = new Ext.Toolbar({
         xtype: 'tbbutton',
         id: 'btn_connect',
         handler: function(f){
-            connect();
+            chat.connect();
         },
         text: '&lt;Connect&gt;',
         cls: 'x-btn-text-icon',
@@ -120,7 +120,7 @@ var topPanel = new Ext.Toolbar({
         text: '&lt;Disconnect&gt;',
 		disabled:'true',
         handler: function(){
-            disconnect();
+            chat.disconnect();
         },
         id: 'btn_disconnect',
         cls: 'x-btn-text-icon',
