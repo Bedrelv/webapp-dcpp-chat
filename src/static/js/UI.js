@@ -44,14 +44,6 @@ var tabPanel = new Ext.TabPanel({
         layout: "auto",
         id: 'main_log',
         cls: 'main_log'
-    }, {
-        title: 'Private msg',
-        closable: true,
-        html: '<div><p>Приватное сообщение</p></div>'
-    }, {
-        title: 'Хранительдлинный',
-        closable: true,
-        html: '<div><p>Приватное сообщение</p></div>'
     }]
 });
 

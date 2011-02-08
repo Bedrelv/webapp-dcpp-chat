@@ -24,6 +24,14 @@ class EventsDC(BotDC.EventsDC):
         
         for user in thread_dic[str(self.name)][1]:
             user.write_message(data)
+
+    def MsgPrivate(self, nick, message):
+        dic = {"cmd":"MsgPrivat", "data":{"nick": nick, "text":message, "time":time.strftime("%H:%M:%S"), "data":time.strftime("%Y-%m-%d")}}
+        data = json.dumps(dic)
+#        for user in thread_dic[str(self.name)][1]:
+#            user.write_message(data)
+        for user in thread_dic[str(nick)][1]:
+            user.write_message(data)
     
     def close(self):
         data = json.dumps({"cmd":"close"})

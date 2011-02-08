@@ -137,9 +137,10 @@ class pydcbot(threading.Thread):
 
         if (datalist[0] == '$To:') and (datalist[1] == self.config['nick']): #личное сообщение
             try:
+                print ("*****:",(unicode(datalist[3], self.config['coding_hub']), unicode(message.split(' ', 5)[5], self.config['coding_hub'])))
                 self.EventsDC.MsgPrivate(unicode(datalist[3], self.config['coding_hub']), unicode(message.split(' ', 5)[5], self.config['coding_hub']))
             except:
-                print "Error: MsgPrivate"
+                print "Error: MsgPrivate: ", sys.exc_info()[0]
             pass
 
         try:
@@ -188,7 +189,7 @@ class pydcbot(threading.Thread):
         if self.debugflag == 1:
             print time.strftime("%Y-%m-%d %H:%M:%S") + ' -> message privat say: ' + text.encode("cp1251")
         try:
-            self.s.send('$To: '+nick.encode(self.config['coding_hub'])+' From: '+self.config['nick']+' $<' + self.config['nick'] + '> ' + text.encode(self.config['coding_hub']) + '|')
+            self.s.send('$To: ' + nick + ' From: '+self.config['nick']+' $<' + self.config['nick'] + '> ' + text.encode(self.config['coding_hub']) + '|')
         except:
             print "Error: send_privat_message"
 

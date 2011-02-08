@@ -70,6 +70,10 @@ var chat = {
             chat.ui.add_message(json);
         }
 
+        if (json.cmd == "MsgPrivat") {
+            chat.ui.add_message_privat(json);
+        }
+
         if (json.cmd == "close") {
             chat.events.on_system_message('Сервер хаба упал...');
         }
@@ -128,6 +132,32 @@ chat.ui = {
         $("#main_log").stop(true, false).animate({ scrollTop: temp }, "slow");
     },
 
+    'add_message_privat': function(json) {
+        user = ''+json.data.nick;
+        
+        if ($('#' + user).length == 0) {
+            tabPanel.add({
+                title: user,
+                frame: 'true',
+                closable: true,
+                xtype: "container",
+                autoEl: "div",
+                layout: "auto",
+                id: user,
+                cls: 'main_log'
+            });
+        };
+
+        $("#"+user)
+            .append($('<div/>', { class: 'msg'})
+                .append($('<div/>', { class: 'msg_time', text: '[' + json.data.time + ']'}))
+                .append($('<div/>', { class: 'msg_nick', text: '<' + json.data.nick + '>', dblclick: function() { chat.ui.add_nick($(this).text().slice(1, -1))}}))
+                .append($('<div/>', { class: 'msg_text', text: json.data.text}))
+            );
+        var temp = document.getElementById(user).scrollHeight;
+        $("#" + user).stop(true, false).animate({ scrollTop: temp }, "slow");
+    },
+
     'add_nick': function(nick) {
         $("#formSend_textfield").val(($("#formSend_textfield").val() + " " + nick + ": "));
         $("#formSend_textfield").focus();
@@ -148,7 +178,7 @@ chat.ui = {
     },
 
     'send': function() {
-        active_tab = tabPanel.getActiveTab().id;
+        active_tab = ''+tabPanel.getActiveTab().id;
         if ($('#formSend_textfield').val() == '') {
             chat.events.on_system_message('Сообщение не может быть пустым');
         }
