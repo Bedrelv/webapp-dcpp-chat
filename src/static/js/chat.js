@@ -49,6 +49,8 @@ var chat = {
                 chat.events.on_system_message('Disconnect')
             };
 
+            chat.ui.connect();
+
         } else {
             chat.events.on_system_message('Ваш браузер не поддерживается');
         }
@@ -57,6 +59,7 @@ var chat = {
 
     'disconnect': function() {
         chat.ws.close();
+        chat.ui.disconnect();
     },
 
     'cmd': function(json) {
@@ -64,7 +67,7 @@ var chat = {
         console.log(json);
 
         if (json.cmd == "MsgGlobal") {
-
+            chat.ui.add_message(json);
         }
 
         if (json.cmd == "close") {
@@ -105,10 +108,42 @@ chat.events = {
     },
 
     'on_userslist': function(json) {
-
+        store.loadData(json);
     },
 
     'on_system_message': function(msg) {
         console.log(msg);
+    }
+};
+
+chat.ui = {
+    'add_message': function(json) {
+        $("#main_log")
+                .append($('<div/>', { class: 'msg'})
+                    .append($('<div/>', { class: 'msg_time', text: '[' + json.data.time + ']'}))
+                    .append($('<div/>', { class: 'msg_nick', text: '<' + json.data.nick + '>', dblclick: function() { chat.ui.add_nick($(this).text().slice(1, -1))}}))
+                    .append($('<div/>', { class: 'msg_text', text: json.data.text}))
+                );
+        var temp = document.getElementById('main_log').scrollHeight;
+        $("#main_log").stop(true, false).animate({ scrollTop: temp }, "slow");
+    },
+
+    'add_nick': function(nick) {
+        $("#formSend_textfield").val(($("#formSend_textfield").val() + " " + nick + ": "));
+        $("#formSend_textfield").focus();
+    },
+
+    'connect': function() {
+        Ext.getCmp('btn_connect').disable();
+        Ext.getCmp('btn_disconnect').enable();
+        Ext.getCmp('formSend').enable();
+        Ext.getCmp('btn_update').enable();
+    },
+
+    'disconnect': function() {
+        Ext.getCmp('btn_disconnect').disable();
+        Ext.getCmp('formSend').disable();
+        Ext.getCmp('btn_connect').enable();
+        Ext.getCmp('btn_update').disable();
     }
 };
