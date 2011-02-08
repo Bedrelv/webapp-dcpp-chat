@@ -20,14 +20,7 @@ class IndexMsgHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
 
-class ChatMsgHandler(BaseHandler):
-    @tornado.web.authenticated
-    def get(self):
-        uid = self.get_secure_cookie("uid")
-        avatar_mini = self.get_secure_cookie("photo_rec")
-        self.render("chat.html", uid=uid, avatar_mini=avatar_mini)
-
-class ExtjsHandler(BaseHandler):
+class ChatHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         uid = self.get_secure_cookie("uid")
@@ -46,7 +39,7 @@ class AuthMsgHandler(tornado.web.RequestHandler):
         self.set_secure_cookie("photo", self.get_argument("photo"))
         self.set_secure_cookie("photo_rec", self.get_argument("photo_rec"))
         self.set_secure_cookie("hash", self.get_argument("hash"))
-        self.redirect("/extjs")
+        self.redirect("/chat")
         pass
 
 class WebsocketHandler(tornado.websocket.WebSocketHandler):
@@ -78,8 +71,7 @@ settings = {
 
 application = tornado.web.Application([
                                               (r'/', IndexMsgHandler),
-                                              (r'/extjs', ExtjsHandler),
-                                              (r'/chat', ChatMsgHandler),
+                                              (r'/chat', ChatHandler),
                                               (r'/login', LoginMsgHandler),
                                               (r'/auth/', AuthMsgHandler),
                                               (r'/websocket', WebsocketHandler),
