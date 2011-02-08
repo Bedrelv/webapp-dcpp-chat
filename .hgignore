@@ -2,8 +2,14 @@ syntax: glob
 *.bak
 *.tmp
 *.pyc
+
+# NetBeans files
 nbproject\
-.idea\
+
+# Intellij IDEA files
+.idea/*
+*.iml
+
 src\.idea
 src\static\lib\
 syntax: regexp
