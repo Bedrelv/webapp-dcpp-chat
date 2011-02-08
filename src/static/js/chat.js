@@ -35,7 +35,7 @@ var chat = {
 
         if (window.WebSocket) {
 
-            chat.ws = new WebSocket("ws://yurtaev.homeip.net:8888/websocket");
+            chat.ws = new WebSocket(chat.option.url);
 
             chat.ws.onopen = function() {
                 chat.events.on_system_message('Connect');
@@ -60,12 +60,32 @@ var chat = {
     },
 
     'cmd': function(json) {
-        console.log(json)
+        
+        console.log(json);
+
+        if (json.cmd == "MsgGlobal") {
+
+        }
+
+        if (json.cmd == "close") {
+            chat.events.on_system_message('Сервер хаба упал...');
+        }
+
+        if (json.cmd == "NickList") {
+            chat.events.on_userslist(json);
+        }
     },
 
     'send': function(json) {
         data = chat.stringify(json);
         chat.ws.send(data);
+    },
+
+    'get_userslist': function() {
+        json = {
+            'cmd': 'GetNickList'
+        };
+        chat.send(json);
     }
     
 };
