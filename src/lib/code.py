@@ -8,7 +8,7 @@ thread_dic = {}
 
 config = {
     'host': '91.144.171.226', # 91.144.171.226 dc.omzona.ru
-    'port': 411,
+    'port': 8889,#411,
     'nick': 'LogBot', #'killnews',
     'password': 'qwerty123',
     'coding_hub': 'cp1251'
