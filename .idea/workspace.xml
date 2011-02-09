@@ -5,6 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib/BotDC.py" afterPath="$PROJECT_DIR$/src/lib/BotDC.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/lib/code.py" afterPath="$PROJECT_DIR$/src/lib/code.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server.py" afterPath="$PROJECT_DIR$/src/server.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/static/js/UI.js" afterPath="$PROJECT_DIR$/src/static/js/UI.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/static/js/chat.js" afterPath="$PROJECT_DIR$/src/static/js/chat.js" />
     </list>
     <ignored path="webapp-dcpp-chat.iws" />
@@ -58,7 +59,7 @@
       <file leaf-file-name="chat.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/static/js/chat.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="149" column="40" selection-start="3785" selection-end="3785" vertical-scroll-proportion="0.39750692">
+            <state line="163" column="30" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.43905818">
               <folding />
             </state>
           </provider>
@@ -67,7 +68,7 @@
       <file leaf-file-name="UI.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/static/js/UI.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="6" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
+            <state line="47" column="30" selection-start="1084" selection-end="1102" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,11 +87,11 @@
         <option value="$PROJECT_DIR$/src/static/css/main.css" />
         <option value="$PROJECT_DIR$/src/templates/chat-extjs.html" />
         <option value="$PROJECT_DIR$/.hgignore" />
-        <option value="$PROJECT_DIR$/src/static/js/UI.js" />
         <option value="$PROJECT_DIR$/src/lib/BotDC.py" />
         <option value="$PROJECT_DIR$/src/server.py" />
-        <option value="$PROJECT_DIR$/src/static/js/chat.js" />
         <option value="$PROJECT_DIR$/src/lib/code.py" />
+        <option value="$PROJECT_DIR$/src/static/js/UI.js" />
+        <option value="$PROJECT_DIR$/src/static/js/chat.js" />
       </list>
     </option>
   </component>
@@ -421,13 +422,6 @@
         <state line="14" column="19" selection-start="182" selection-end="182" vertical-scroll-proportion="0.32761312" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/static/js/UI.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="6" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/lib/BotDC.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="142" column="59" selection-start="5001" selection-end="5015" vertical-scroll-proportion="0.0">
@@ -449,9 +443,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/static/js/UI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="30" selection-start="1084" selection-end="1102" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/static/js/chat.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="149" column="40" selection-start="3785" selection-end="3785" vertical-scroll-proportion="0.39750692">
+        <state line="163" column="30" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.43905818">
           <folding />
         </state>
       </provider>

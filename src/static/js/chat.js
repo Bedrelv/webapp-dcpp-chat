@@ -160,6 +160,26 @@ chat.ui = {
         $("#" + user).stop(true, false).animate({ scrollTop: temp }, "slow");
     },
 
+    'on_dbclick_to_user': function(user) {
+        //start a private chat
+        if ($('#' + user).length == 0) {
+            tabPanel.add({
+                title: user,
+                frame: 'true',
+                closable: true,
+                xtype: "container",
+                autoEl: "div",
+                layout: "auto",
+                id: user,
+                cls: 'main_log'
+            });
+            tabPanel.setActiveTab(user);
+        } else {
+            tabPanel.setActiveTab(user);
+        }
+
+    },
+
     'add_nick': function(nick) {
         $("#formSend_textfield").val(($("#formSend_textfield").val() + " " + nick + ": "));
         $("#formSend_textfield").focus();

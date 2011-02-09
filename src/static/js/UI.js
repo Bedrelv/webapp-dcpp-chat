@@ -16,6 +16,17 @@ var grid = new Ext.grid.GridPanel({
     store: store,
     stripeRows: true,
     split: true,
+    /*sm: new Ext.grid.RowSelectionModel({
+        singleSelect: false,
+        listeners: {
+            rowselect: {
+                fn: function(sm, index, record) {
+                    Ext.Msg.alert('You Selected', record.data.name);
+                    console.log(sm);
+                }
+            }
+        }
+    }),*/
     bbar: [
         {
             xtype: 'tbbutton',
@@ -30,6 +41,11 @@ var grid = new Ext.grid.GridPanel({
     columns:[
         {header:'Ник', dataIndex: 'name', sortable: true, width: 160}
     ]
+});
+
+grid.on('rowdblclick', function(sm, index, record){
+    user = sm.store.data.items[index].json.name;
+    chat.ui.on_dbclick_to_user(user);
 });
 
 var tabPanel = new Ext.TabPanel({
