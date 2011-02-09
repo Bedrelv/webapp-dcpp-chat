@@ -134,7 +134,7 @@ chat.ui = {
     },
 
     'add_message_privat': function(json) {
-        user = ''+json.data.nick;
+        user = ''+json.data.from;
         
         if ($('#' + user).length == 0) {
             tabPanel.add({

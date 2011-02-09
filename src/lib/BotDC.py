@@ -140,7 +140,7 @@ class pydcbot(threading.Thread):
                 print ("*****:",(unicode(datalist[3], self.config['coding_hub']), unicode(message.split(' ', 5)[5], self.config['coding_hub'])))
                 self.EventsDC.MsgPrivate(unicode(datalist[3], self.config['coding_hub']), unicode(message.split(' ', 5)[5], self.config['coding_hub']))
             except:
-                print "Error: MsgPrivate: ", sys.exc_info()[0]
+                print "Error: MsgPrivate: ", sys.exc_info()
             pass
 
         try:

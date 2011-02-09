@@ -57,7 +57,7 @@ class WebsocketHandler(tornado.websocket.WebSocketHandler):
             if data['cmd'] == 'GetNickList':
                 bots.GetNickList(self.get_secure_cookie("uid"))
         except:
-            print "Error: on_message"
+            print "Error: on_message "
 
     def on_close(self):
         print "Disconnect " + self.request.remote_ip

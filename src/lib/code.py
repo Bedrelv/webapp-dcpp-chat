@@ -26,11 +26,20 @@ class EventsDC(BotDC.EventsDC):
             user.write_message(data)
 
     def MsgPrivate(self, nick, message):
-        dic = {"cmd":"MsgPrivat", "data":{"nick": nick, "text":message, "time":time.strftime("%H:%M:%S"), "data":time.strftime("%Y-%m-%d")}}
+        dic = {
+            "cmd":"MsgPrivat",
+            "data":
+                {
+                "from": nick,
+                "to": self.name,
+                "nick": nick,
+                "text":message,
+                "time":time.strftime("%H:%M:%S"),
+                "data":time.strftime("%Y-%m-%d")
+            }
+        }
         data = json.dumps(dic)
         for user in thread_dic[str(self.name)][1]:
-            user.write_message(data)
-        for user in thread_dic[str(nick)][1]:
             user.write_message(data)
     
     def close(self):
@@ -74,6 +83,22 @@ class BotThread:
 
     def send_privat(self, name, nick, text):
         thread_dic[str(name)][0].send_privat_message(nick, text)
+        
+        dic = {
+            "cmd":"MsgPrivat",
+            "data":
+                {
+                "from": nick,
+                "to": name,
+                "nick": name,
+                "text":text,
+                "time":time.strftime("%H:%M:%S"),
+                "data":time.strftime("%Y-%m-%d")
+            }
+        }
+        data = json.dumps(dic)
+        for user in thread_dic[str(name)][1]:
+            user.write_message(data)
     
     def close(self, name, wsuser):
         if len(thread_dic[str(name)][1]) == 1:
