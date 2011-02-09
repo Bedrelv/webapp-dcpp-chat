@@ -76,6 +76,7 @@ var chat = {
 
         if (json.cmd == "close") {
             chat.events.on_system_message('Сервер хаба упал...');
+            chat.ui.disconnect();
         }
 
         if (json.cmd == "NickList") {
@@ -146,6 +147,7 @@ chat.ui = {
                 id: user,
                 cls: 'main_log'
             });
+            tabPanel.setActiveTab(user);
         };
 
         $("#"+user)
